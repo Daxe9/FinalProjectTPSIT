@@ -1,22 +1,51 @@
-<script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import HelloWorld from "./components/HelloWorld.vue";
-</script>
+<script setup lang="ts"></script>
 
 <template>
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
-    <h1 class="bg-primary">Ciao</h1>
+    <div id="app">
+        <nav class="navbar p-3">
+            <router-link class="link mb-0 h2" :to="{ name: 'Home' }"
+                >Home</router-link
+            >
+        </nav>
+        <router-view />
+    </div>
 </template>
 
 <style>
+@font-face {
+    font-family: "roboto-slap";
+    src: url("../Roboto_Slab/static/RobotoSlab-Regular.ttf");
+}
+
+html,
+body {
+    padding: 0;
+    margin: 0;
+}
+
+nav {
+    background-color: #43aa8b;
+    color: #ffffff;
+}
+
+body {
+    height: 100vh;
+}
+
+.link,
+.link:link,
+.link:visited,
+.link:hover,
+.link:active {
+    text-decoration: none;
+    color: #ffffff !important;
+}
+
 #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
+    font-family: roboto-slap;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-    margin-top: 60px;
 }
 </style>
