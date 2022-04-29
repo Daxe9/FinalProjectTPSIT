@@ -1,13 +1,14 @@
 <script setup lang="ts"></script>
 
 <template>
-    <div id="app">
+    <div id="app" class="d-flex flex-column">
         <nav class="navbar p-3">
-            <router-link class="link mb-0 h2" :to="{ name: 'Home' }"
+            <router-link class="link mb-0 h3" :to="{ name: 'Home' }"
                 >Home</router-link
             >
+            <span class="badge">TEST</span>
         </nav>
-        <router-view />
+        <router-view class="r-view" />
     </div>
 </template>
 
@@ -40,12 +41,21 @@ body {
     text-decoration: none;
     color: #ffffff !important;
 }
+nav {
+    flex-basis: 8%;
+}
 
+.r-view {
+    flex-basis: 92%;
+}
 #app {
     font-family: roboto-slap;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
 }
 </style>

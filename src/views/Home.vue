@@ -1,13 +1,21 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import CryptoLayout from "../components/CryptoLayout.vue";
-const title = ref<string>("Test");
+import { defineAsyncComponent } from "vue";
+const CryptoLayout = defineAsyncComponent(
+    () => import("../components/CryptoLayout.vue")
+);
 </script>
 
 <template>
     <div>
-        <h1>{{ title }}</h1>
-        <CryptoLayout></CryptoLayout>
+        <suspense>
+            <template #default>
+                <CryptoLayout />
+            </template>
+            <template #fallback>
+                <div><h1>Loading...</h1></div>
+            </template>
+        </suspense>
     </div>
 </template>
 
@@ -15,12 +23,5 @@ const title = ref<string>("Test");
 div {
     display: flex;
     flex-direction: row;
-}
-h1 {
-    color: #ffba08;
-    margin: 5% 0 0 0.1em;
-    font-size: 700%;
-    writing-mode: vertical-rl;
-    text-orientation: upright;
 }
 </style>

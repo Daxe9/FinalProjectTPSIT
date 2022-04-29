@@ -1,63 +1,72 @@
-<script setup lang="ts">
-import { reactive } from "vue";
-import CoinServices from "../services/CoinInfoService"
-const url =
-    "https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=7&interval=daily";
-// const coinInfo = reactive({
-//     description: "" as string,
-//     hashing_algorithm: "" as string,
-//     current_price: 0 as number,
-//     rank: 0 as number
-// });
+<script lang="ts">
+import { ref } from "vue";
+import CoinServices from "../services/CoinInfoService";
 
-const info = await CoinServices.getCoinData("bitcoin", "usd", 7);
-console.log(info)
+export default {
+    async setup() {
+        const rawInfo = ref({});
+        rawInfo.value = await CoinServices.getCoinData("bitcoin", "usd", 7);
+        return {
+            rawInfo
+        };
+    }
+};
 </script>
 <template>
-    <div class="container mt-5">
-        <div class="row custom-row">
-            <div class="col-5 p-1">
-                <div class="custom-card">
-                    {{ coinInfo.description }}
+    <div class="container d-flex justify-content-center">
+        <div class="row custom-row align-content-start">
+            <div class="col-5 p-4 custom-col">
+                <div id="description" class="custom-card p-2"></div>
+            </div>
+            <div class="col-3 p-4 custom-col">
+                <div class="custom-card p-2">
+                    <h3>Hashing algorithm:</h3>
+                    <h1>{{ rawInfo.hashing_algorithm }}</h1>
                 </div>
             </div>
-            <div class="col-3 p-1">
-                <div class="custom-card">
-                    Hashing algorithm:
-                    {{ coinInfo.hashing_algorithm }}
+            <div class="col-4 p-4 custom-col">
+                <div class="custom-card p-2">
+                    <h3>Price in USD $</h3>
+                    <h1>{{ rawInfo.market_data.current_price.usd }}$</h1>
                 </div>
             </div>
-            <div class="col-4 p-1">
-                <div class="custom-card">
-                    Price in USD $
-                    {{ coinInfo.current_price }}
+            <div class="col-3 p-4 custom-col">
+                <div class="custom-card p-2">
+                    <h3>random shit</h3>
                 </div>
             </div>
-            <div class="col-5 p-1">
-                <div class="custom-card">
-                    Rank in Coingecko {{ coinInfo.rank }}
+            <div class="col-4 p-4 custom-col">
+                <div class="custom-card p-2">
+                    <h3>Rank in Coingecko</h3>
+                    <h1>{{ rawInfo.coingecko_rank }}</h1>
                 </div>
             </div>
-            <div class="col-3 p-1">
-                <div class="custom-card">test5</div>
-            </div>
-            <div class="col-4 p-1">
-                <div class="custom-card">test6</div>
+            <div class="col-5 p-4 custom-col">
+                <div class="custom-card p-2">
+                    <h3>Past 7 days market cap in USD $</h3>
+                    <h1>{{}}</h1>
+                </div>
             </div>
         </div>
     </div>
 </template>
 <style scoped>
-.custom-row {
+. .custom-row {
+    height: 100vh !important;
     width: 100%;
 }
+
+.custom-col {
+    height: 37%;
+}
+
 .custom-card {
     width: 100%;
     border: 1px solid #ffba08;
-    height: 30%;
+    height: 100%;
+    overflow: auto;
     background: white;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
-        rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0 10px 36px 0, rgba(0, 0, 0, 0.06) 0 0 0 1px;
     -webkit-backdrop-filter: blur(5px);
     border-radius: 10px;
 }

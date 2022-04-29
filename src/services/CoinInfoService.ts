@@ -9,11 +9,25 @@ const apiClient = axios.create({
     }
 });
 
+function pick(obj: any, [...keys]) {
+    return Object.fromEntries(
+        keys.filter((key) => key in obj).map((key) => [key, obj[key]])
+    );
+}
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 export default {
     getRawData(coinID: string) {
         return apiClient
             .get(`coins/${coinID}`)
-            .then(({ data }) => data)
+            .then(({ data }) =>
+                pick(data, [
+                    "description",
+                    "hashing_algorithm",
+                    "market_data",
+                    "coingecko_rank"
+                ])
+            )
             .catch((error) => {
                 return new Error(error);
             });
@@ -33,12 +47,13 @@ export default {
                 return new Error(error);
             });
     },
-    getCoinData(
+    async getCoinData(
         coinID: string,
         currency: string,
         days: number,
         interval: string = "daily"
-    ) {
+    ): Promise<any> {
+        await sleep(1000);
         return Promise.all([
             this.getRawData(coinID),
             this.getMarketData(coinID, currency, days, interval)
