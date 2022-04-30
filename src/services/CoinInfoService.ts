@@ -22,6 +22,8 @@ export default {
             .get(`coins/${coinID}`)
             .then(({ data }) =>
                 pick(data, [
+                    "name",
+                    "image",
                     "description",
                     "hashing_algorithm",
                     "market_data",
