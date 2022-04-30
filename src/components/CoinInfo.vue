@@ -1,19 +1,71 @@
 <script lang="ts">
 import { ref } from "vue";
 import CoinServices from "../services/CoinInfoService";
+import {Line} from "vue-chartjs";
+import {
+    Chart as ChartJS,
+    Title,
+    Tooltip,
+    Legend,
+    CategoryScale,
+    LinearScale,
+    LineElement,
+    PointElement
+} from "chart.js";
+
+ChartJS.register(
+    Title,
+    Tooltip,
+    Legend,
+    LineElement,
+    LinearScale,
+    PointElement,
+    CategoryScale
+);
 
 export default {
     props: {
         coinID: String
     },
     async setup(props: { coinID: string }) {
-        const rawInfo = ref({});
+        const rawInfo = ref<any>({});
         rawInfo.value = await CoinServices.getCoinData(props.coinID, "usd", 7);
+
+
+        const pastSevenDays = []
+        const prices: Array<number> = []
+
+        rawInfo.value.marketData.prices.forEach((price: Array<number>) => {
+            prices.push(price[1])
+        })
+
+        const date = new Date()
+        for(let i = 0; i < 8; ++i) {
+            date.setDate(date.getDate() - i)
+            pastSevenDays.push(JSON.parse(JSON.stringify(date.toLocaleDateString())))
+        }
+
+        const test = ref({
+            labels: pastSevenDays,
+                datasets: [
+                    {
+                        label: 'Price',
+                        backgroundColor: '#f87979',
+                        data: prices
+                    }
+            ]
+        })
+
+        console.log(rawInfo.value.marketData);
         return {
-            rawInfo
+            rawInfo,
+            test
         };
+    },
+    components: {
+        Line
     }
-};
+}
 </script>
 <template>
     <div class="container">
@@ -56,8 +108,7 @@ export default {
             </div>
             <div class="col-sm-12 col-lg-5 col-md-9 p-4 custom-col">
                 <div class="custom-card p-2">
-                    <span>Past 7 days market cap in USD $</span>
-                    <span>{{}}</span>
+                        <Line :chart-data="test" />
                 </div>
             </div>
         </div>
@@ -65,7 +116,8 @@ export default {
 </template>
 <style scoped>
 .custom-col {
-    height: 36%;
+    min-height: 36%;
+    transform: scale(0.8);
 }
 
 .custom-card {

@@ -8,6 +8,7 @@ const router = useRouter();
 function goToCoin() {
     router.push({name: "CoinInfo", params: {coinID: coinName.value.toLowerCase()}});
 }
+
 </script>
 
 <template>
