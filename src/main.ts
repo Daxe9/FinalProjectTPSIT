@@ -4,4 +4,6 @@ import router from "./router";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 
+import "sweetalert2/dist/sweetalert2.min.css";
+
 createApp(App).use(router).mount("#app");

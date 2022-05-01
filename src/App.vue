@@ -42,11 +42,11 @@ body {
     color: #ffffff !important;
 }
 nav {
-    flex-basis: 8%;
+    flex-basis: 6%;
 }
 
 .r-view {
-    flex-basis: 92%;
+    flex-basis: 80%;
 }
 #app {
     font-family: roboto-slap;

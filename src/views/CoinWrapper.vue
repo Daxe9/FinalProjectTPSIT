@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import {useRoute} from "vue-router";
-import {defineAsyncComponent} from "vue";
+import { useRoute } from "vue-router";
+import { defineAsyncComponent } from "vue";
 
 const route = useRoute();
 
 const CryptoLayout = defineAsyncComponent(
-    () => import("../components/CoinInfo.vue")
+    () => import("../components/CoinDetails.vue")
 );
 </script>
 
@@ -13,7 +13,7 @@ const CryptoLayout = defineAsyncComponent(
     <div>
         <suspense>
             <template #default>
-                <CryptoLayout :coinID="route.params.coinID"/>
+                <CryptoLayout :coinID="route.params.coinID" />
             </template>
             <template #fallback>
                 <div>

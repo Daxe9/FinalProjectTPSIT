@@ -1,7 +1,8 @@
 <script lang="ts">
 import { ref } from "vue";
 import CoinServices from "../services/CoinInfoService";
-import {Line} from "vue-chartjs";
+import { Line } from "vue-chartjs";
+import Swal from "sweetalert2";
 import {
     Chart as ChartJS,
     Title,
@@ -29,86 +30,104 @@ export default {
     },
     async setup(props: { coinID: string }) {
         const rawInfo = ref<any>({});
+        const prices: Array<number> = [];
+        const pastSevenDays = [];
+
         rawInfo.value = await CoinServices.getCoinData(props.coinID, "usd", 7);
 
-
-        const pastSevenDays = []
-        const prices: Array<number> = []
-
         rawInfo.value.marketData.prices.forEach((price: Array<number>) => {
-            prices.push(price[1])
-        })
+            prices.push(price[1]);
+        });
 
-        const date = new Date()
-        for(let i = 0; i < 8; ++i) {
-            date.setDate(date.getDate() - i)
-            pastSevenDays.push(JSON.parse(JSON.stringify(date.toLocaleDateString())))
+        const date = new Date();
+        for (let i = 0; i < 8; ++i) {
+            date.setDate(date.getDate() - i);
+            pastSevenDays.push(
+                JSON.parse(JSON.stringify(date.toLocaleDateString()))
+            );
         }
 
-        const test = ref({
+        const chart = ref({
             labels: pastSevenDays,
-                datasets: [
-                    {
-                        label: 'Price',
-                        backgroundColor: '#f87979',
-                        data: prices
-                    }
+            datasets: [
+                {
+                    label: "Price",
+                    backgroundColor: "#000",
+                    data: prices
+                }
             ]
-        })
-
-        console.log(rawInfo.value.marketData);
+        });
+        function checkDescription(): void {
+            // @ts-ignore
+            Swal.fire({
+                title: "Description",
+                html: rawInfo.value.description.en,
+                icon: "info",
+                confirmButtonText: "Close",
+                width: "60%",
+                background: "#fff",
+                backdrop: "rgba(0,0,123,0.4)"
+            });
+        }
         return {
             rawInfo,
-            test
+            chart,
+            checkDescription
         };
     },
     components: {
         Line
     }
-}
+};
 </script>
 <template>
     <div class="container">
         <div class="row fs-6 align-content-start">
             <div class="col-sm-12 col-lg-5 col-md-8 p-4 custom-col">
-                <div id="description" class="custom-card p-2">
-                    {{ rawInfo.name }}
-                    <br />
+                <button
+                    @click="checkDescription"
+                    id="description"
+                    class="custom-card shadow-lg p-2 d-flex flex-column justify-content-center align-items-center"
+                >
+                    <h1>{{ rawInfo.name }}</h1>
                     <img
                         :src="rawInfo.image.small"
                         :alt="rawInfo.name + ' image'"
                     />
-                </div>
+                    <p>Click here to read more</p>
+                </button>
             </div>
             <div class="col-sm-12 col-lg-3 col-md-4 p-4 custom-col">
                 <div class="custom-card p-2">
-                    <span>Hashing algorithm: </span>
-                    <br>
-                    <span>{{ rawInfo.hashing_algorithm || "Not accessible" }}</span>
+                    <h3>Hashing algorithm:</h3>
+                    <br />
+                    <span>{{
+                        rawInfo.hashing_algorithm || "Not accessible"
+                    }}</span>
                 </div>
             </div>
             <div class="col-sm-12 col-lg-4 col-md-7 p-4 custom-col">
                 <div class="custom-card p-2">
-                    <span>Price in USD $</span>
-                    <br>
+                    <h3>Price in USD $</h3>
+                    <br />
                     <span>{{ rawInfo.market_data.current_price.usd }}$</span>
                 </div>
             </div>
             <div class="col-sm-12 col-lg-3 col-md-5 p-4 custom-col">
                 <div class="custom-card p-2">
-                    <span>random shit</span>
+                    <h3>random shit</h3>
                 </div>
             </div>
             <div class="col-sm-12 col-lg-4 col-md-3 p-4 custom-col">
                 <div class="custom-card p-2">
-                    <span>Rank in Coingecko </span>
-                    <br>
+                    <h3>Rank in Coingecko</h3>
+                    <br />
                     <span>{{ rawInfo.coingecko_rank }}</span>
                 </div>
             </div>
             <div class="col-sm-12 col-lg-5 col-md-9 p-4 custom-col">
                 <div class="custom-card p-2">
-                        <Line :chart-data="test" />
+                    <Line :chart-data="chart" />
                 </div>
             </div>
         </div>

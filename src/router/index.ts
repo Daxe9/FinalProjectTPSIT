@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/CoinWrapper.vue";
+import CoinDetails from "../views/CoinWrapper.vue";
 import CoinsSearch from "../views/CoinsSearch.vue";
+
 const routes = [
     {
         path: "/",
@@ -9,8 +10,8 @@ const routes = [
     },
     {
         path: "/coins/:coinID",
-        name: "CoinInfo",
-        component: Home
+        name: "CoinDetails",
+        component: CoinDetails
     }
 ];
 
