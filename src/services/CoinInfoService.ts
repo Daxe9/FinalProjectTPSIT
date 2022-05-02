@@ -14,22 +14,36 @@ function pick(obj: any, [...keys]) {
         keys.filter((key) => key in obj).map((key) => [key, obj[key]])
     );
 }
+interface MarketData {
+    market_cap: Array<number>;
+    prices: Array<number>;
+    total_volumes: Array<number>;
+}
 
 // make an interface with these types "name", "image", "description", "hashing_algorithm", "market_data", "coingecko_rank"
-interface APIData {
+interface RawData {
     name: string;
     image: any;
-    description: string;
+    description: {
+        en: string
+    };
     hashing_algorithm: string;
     market_data: any;
+    current_price: {
+        usd: number
+    };
     coingecko_rank: number;
 }
+export interface APIData extends RawData {
+    marketData: MarketData;
+}
+
 
 export default {
     getRawData(coinID: string) {
         return apiClient
             .get(`coins/${coinID}`)
-            .then((res: AxiosResponse<APIData>): APIData => {
+            .then((res: AxiosResponse<RawData>): RawData => {
                 return pick(res.data, [
                     "name",
                     "image",
@@ -53,7 +67,7 @@ export default {
             .get(
                 `coins/${coinID}/market_chart?vs_currency=${currency.toLowerCase()}&days=${days}&interval=${interval}`
             )
-            .then((res: AxiosResponse) => res.data)
+            .then((res: AxiosResponse): MarketData => res.data)
             .catch(() => {
                 throw new Error("No coin with given ID found");
             });

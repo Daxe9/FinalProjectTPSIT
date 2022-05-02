@@ -4,6 +4,7 @@ import CoinServices from "../services/CoinInfoService";
 import { Line } from "vue-chartjs";
 import { useRouter } from "vue-router";
 import Swal from "sweetalert2";
+import {APIData} from "../services/CoinInfoService";
 import {
     Chart as ChartJS,
     Title,
@@ -30,7 +31,7 @@ export default {
         coinID: String
     },
     async setup(props: { coinID: string }) {
-        const rawInfo = ref<any>({});
+        const rawInfo = ref<APIData>();
         const router = useRouter();
 
         const prices: Array<number> = [];
@@ -42,8 +43,9 @@ export default {
                 "usd",
                 7
             );
-            rawInfo.value.marketData.prices.forEach((price: Array<number>) => {
-                prices.push(price[1]);
+            // @ts-ignore
+            rawInfo.value.marketData.prices.forEach((singlePrice: Array<number>): void => {
+                prices.push(singlePrice[1]);
             });
 
             const date = new Date();
@@ -65,7 +67,7 @@ export default {
                 ]
             };
         } catch (e: any) {
-            router.push("/");
+            await router.push("/");
         }
 
         function checkDescription(): void {
@@ -80,6 +82,7 @@ export default {
                 backdrop: "rgba(0,0,123,0.4)"
             });
         }
+
         return {
             rawInfo,
             chart,

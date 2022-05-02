@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 
-const coinName = ref("");
+const coinName = ref<string>("");
 const router = useRouter();
 
 function goToCoin() {
