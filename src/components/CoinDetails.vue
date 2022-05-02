@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import CoinServices from "../services/CoinInfoService";
 import { Line } from "vue-chartjs";
+import { useRouter } from "vue-router";
 import Swal from "sweetalert2";
 import {
     Chart as ChartJS,
@@ -30,33 +31,43 @@ export default {
     },
     async setup(props: { coinID: string }) {
         const rawInfo = ref<any>({});
+        const router = useRouter();
+
         const prices: Array<number> = [];
         const pastSevenDays = [];
-
-        rawInfo.value = await CoinServices.getCoinData(props.coinID, "usd", 7);
-
-        rawInfo.value.marketData.prices.forEach((price: Array<number>) => {
-            prices.push(price[1]);
-        });
-
-        const date = new Date();
-        for (let i = 0; i < 8; ++i) {
-            date.setDate(date.getDate() - i);
-            pastSevenDays.push(
-                JSON.parse(JSON.stringify(date.toLocaleDateString()))
+        const chart = ref<any>({});
+        try {
+            rawInfo.value = await CoinServices.getCoinData(
+                props.coinID,
+                "usd",
+                7
             );
+            rawInfo.value.marketData.prices.forEach((price: Array<number>) => {
+                prices.push(price[1]);
+            });
+
+            const date = new Date();
+            for (let i = 0; i < 8; ++i) {
+                date.setDate(date.getDate() - i);
+                pastSevenDays.push(
+                    JSON.parse(JSON.stringify(date.toLocaleDateString()))
+                );
+            }
+
+            chart.value = {
+                labels: pastSevenDays,
+                datasets: [
+                    {
+                        label: "Price IN USD",
+                        backgroundColor: "#000",
+                        data: prices
+                    }
+                ]
+            };
+        } catch (e: any) {
+            router.push("/");
         }
 
-        const chart = ref({
-            labels: pastSevenDays,
-            datasets: [
-                {
-                    label: "Price",
-                    backgroundColor: "#000",
-                    data: prices
-                }
-            ]
-        });
         function checkDescription(): void {
             // @ts-ignore
             Swal.fire({
