@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import {ref} from "vue";
-import {useRouter} from "vue-router";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 
 const coinName = ref<string>("");
 const router = useRouter();
@@ -8,7 +8,7 @@ const router = useRouter();
 function goToCoin() {
     router.push({
         name: "CoinDetails",
-        params: {coinID: coinName.value.toLowerCase().trim()}
+        params: { coinID: coinName.value.toLowerCase().trim() }
     });
 }
 </script>
@@ -16,8 +16,7 @@ function goToCoin() {
 <template>
     <form
         class="d-flex justify-content-center align-items-center"
-        @submit.prevent="goToCoin"
-    >
+        @submit.prevent="goToCoin">
         <div class="d-flex flex-column mb-5">
             <label for="coin-name">Coin's Name</label>
             <div class="input-wrapper">
@@ -27,13 +26,11 @@ function goToCoin() {
                     v-model="coinName"
                     name="coin-name"
                     type="text"
-                    placeholder="Enter coin's name"
-                />
+                    placeholder="Enter coin's name" />
                 <button
                     class="btn custom-button"
                     type="submit"
-                    @click.prevent="goToCoin"
-                >
+                    @click.prevent="goToCoin">
                     Search
                 </button>
             </div>
@@ -63,7 +60,7 @@ div {
     background-color: #42d392;
 }
 
-.custom-input  {
+.custom-input {
     margin-left: 0.4em;
 }
 

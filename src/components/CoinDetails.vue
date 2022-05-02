@@ -1,11 +1,12 @@
 <script lang="ts">
-import {onMounted, ref} from "vue";
+import { onMounted, ref } from "vue";
 import CoinServices from "../services/CoinInfoService";
 import { Line } from "vue-chartjs";
 import { useRouter } from "vue-router";
 import Swal from "sweetalert2";
 import gsap from "gsap";
-import {APIData} from "../services/CoinInfoService";
+import { APIData } from "../services/CoinInfoService";
+import HighlightText from "./HighlightText.vue";
 import {
     Chart as ChartJS,
     Title,
@@ -41,10 +42,10 @@ export default {
                 ease: "back",
                 stagger: {
                     each: 0.25,
-                    from: "random",
+                    from: "random"
                 }
-            })
-        })
+            });
+        });
 
         const rawInfo = ref<APIData>();
         const router = useRouter();
@@ -58,10 +59,12 @@ export default {
                 7
             );
             // @ts-ignore
-            rawInfo.value.marketData.prices.forEach((singlePrice: Array<number>): void => {
-                prices.push(singlePrice[1]);
-            });
-
+            rawInfo.value.marketData.prices.forEach(
+                (singlePrice: Array<number>): void => {
+                    prices.push(singlePrice[1]);
+                }
+            );
+            console.log(rawInfo.value.market_data.current_price);
             const date = new Date();
             for (let i = 0; i < 8; ++i) {
                 date.setDate(date.getDate() - i);
@@ -80,7 +83,6 @@ export default {
                     }
                 ]
             };
-
         } catch (e: any) {
             await router.push("/");
         }
@@ -89,7 +91,10 @@ export default {
             // @ts-ignore
             Swal.fire({
                 title: "Description",
-                html: "<p style='text-align: justify'>" + rawInfo.value.description.en + "</p>",
+                html:
+                    "<p style='text-align: justify'>" +
+                    rawInfo.value.description.en +
+                    "</p>",
                 icon: "info",
                 confirmButtonText: "Close",
                 width: "80%",
@@ -106,24 +111,24 @@ export default {
         };
     },
     components: {
-        Line
-    },
+        Line,
+        HighlightText
+    }
 };
 </script>
 <template>
+    <HighlightText text="ciao" />
     <div class="container">
         <div class="row fs-6 align-content-start">
             <div class="col-sm-12 col-lg-5 col-md-8 p-4 custom-col">
                 <button
                     @click="checkDescription"
                     id="description"
-                    class="custom-card shadow-lg p-2 d-flex flex-column justify-content-center align-items-center"
-                >
+                    class="custom-card shadow-lg p-2 d-flex flex-column justify-content-center align-items-center">
                     <h1>{{ rawInfo.name }}</h1>
                     <img
                         :src="rawInfo.image.small"
-                        :alt="rawInfo.name + ' image'"
-                    />
+                        :alt="rawInfo.name + ' image'" />
                     <p>Click here to read more</p>
                 </button>
             </div>
@@ -138,9 +143,26 @@ export default {
             </div>
             <div class="col-sm-12 col-lg-4 col-md-7 p-4 custom-col">
                 <div class="custom-card p-2">
-                    <h3>Price in USD $</h3>
-                    <br />
-                    <span>{{ rawInfo.market_data.current_price.usd }}$</span>
+                    <p>
+                        Price in Dollar:
+                        {{ rawInfo.market_data.current_price.usd }}$
+                    </p>
+                    <p>
+                        Price in Euro:
+                        {{ rawInfo.market_data.current_price.eur }}$
+                    </p>
+                    <p>
+                        Price in Canadian Dollar:
+                        {{ rawInfo.market_data.current_price.cad }}$
+                    </p>
+                    <p>
+                        Price in Japanese Yen:
+                        {{ rawInfo.market_data.current_price.jpy }}$
+                    </p>
+                    <p>
+                        Price in Australian Dollar:
+                        {{ rawInfo.market_data.current_price.aud }}$
+                    </p>
                 </div>
             </div>
             <div class="col-sm-12 col-lg-3 col-md-5 p-4 custom-col">

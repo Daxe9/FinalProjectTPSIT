@@ -25,19 +25,22 @@ interface RawData {
     name: string;
     image: any;
     description: {
-        en: string
+        en: string;
     };
     hashing_algorithm: string;
     market_data: any;
     current_price: {
-        usd: number
+        usd: number;
+        eur: number;
+        cad: number;
+        jpy: number;
+        aud: number;
     };
     coingecko_rank: number;
 }
 export interface APIData extends RawData {
     marketData: MarketData;
 }
-
 
 export default {
     getRawData(coinID: string) {
