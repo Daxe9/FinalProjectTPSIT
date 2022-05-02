@@ -1,9 +1,10 @@
 <script lang="ts">
-import { ref } from "vue";
+import {onMounted, ref} from "vue";
 import CoinServices from "../services/CoinInfoService";
 import { Line } from "vue-chartjs";
 import { useRouter } from "vue-router";
 import Swal from "sweetalert2";
+import gsap from "gsap";
 import {APIData} from "../services/CoinInfoService";
 import {
     Chart as ChartJS,
@@ -31,9 +32,22 @@ export default {
         coinID: String
     },
     async setup(props: { coinID: string }) {
+        onMounted(() => {
+            gsap.from(".custom-card", {
+                duration: 1,
+                opacity: 0,
+                scale: 0,
+                y: 200,
+                ease: "back",
+                stagger: {
+                    each: 0.25,
+                    from: "random",
+                }
+            })
+        })
+
         const rawInfo = ref<APIData>();
         const router = useRouter();
-
         const prices: Array<number> = [];
         const pastSevenDays = [];
         const chart = ref<any>({});
@@ -66,6 +80,7 @@ export default {
                     }
                 ]
             };
+
         } catch (e: any) {
             await router.push("/");
         }
@@ -74,12 +89,13 @@ export default {
             // @ts-ignore
             Swal.fire({
                 title: "Description",
-                html: rawInfo.value.description.en,
+                html: "<p style='text-align: justify'>" + rawInfo.value.description.en + "</p>",
                 icon: "info",
                 confirmButtonText: "Close",
-                width: "60%",
+                width: "80%",
                 background: "#fff",
-                backdrop: "rgba(0,0,123,0.4)"
+                //rgb(66, 211, 146)
+                backdrop: "rgba(66, 211, 146,0.4)"
             });
         }
 
@@ -91,7 +107,7 @@ export default {
     },
     components: {
         Line
-    }
+    },
 };
 </script>
 <template>

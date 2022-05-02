@@ -30,6 +30,7 @@ nav {
 }
 
 body {
+    min-width: 320px;
     height: 100vh;
 }
 
