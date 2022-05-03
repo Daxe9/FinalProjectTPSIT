@@ -6,7 +6,6 @@ import { useRouter } from "vue-router";
 import Swal from "sweetalert2";
 import gsap from "gsap";
 import { APIData } from "../services/CoinInfoService";
-import HighlightText from "./HighlightText.vue";
 import {
     Chart as ChartJS,
     Title,
@@ -58,8 +57,8 @@ export default {
                 "usd",
                 7
             );
-            // @ts-ignore
             rawInfo.value.marketData.prices.forEach(
+                // @ts-ignore
                 (singlePrice: Array<number>): void => {
                     prices.push(singlePrice[1]);
                 }
@@ -84,7 +83,7 @@ export default {
                 ]
             };
         } catch (e: any) {
-            await router.push("/");
+            await router.push({ name: "404Error" });
         }
 
         function checkDescription(): void {
@@ -111,13 +110,11 @@ export default {
         };
     },
     components: {
-        Line,
-        HighlightText
+        Line
     }
 };
 </script>
 <template>
-    <HighlightText text="ciao" />
     <div class="container">
         <div class="row fs-6 align-content-start">
             <div class="col-sm-12 col-lg-5 col-md-8 p-4 custom-col">

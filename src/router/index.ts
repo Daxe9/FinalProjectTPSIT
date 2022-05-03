@@ -12,6 +12,11 @@ const routes = [
         path: "/coins/:coinID",
         name: "CoinDetails",
         component: CoinDetails
+    },
+    {
+        path: "/404-error",
+        name: "404Error",
+        component: () => import("../views/404Error.vue")
     }
 ];
 
