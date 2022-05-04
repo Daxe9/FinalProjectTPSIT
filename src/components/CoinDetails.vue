@@ -1,21 +1,19 @@
 <script lang="ts">
-import { onMounted, ref } from "vue";
-import CoinServices from "../services/CoinInfoService";
-import { Line } from "vue-chartjs";
-import { useRouter } from "vue-router";
+import {onMounted, ref} from "vue";
+import CoinServices, {APIData} from "../services/CoinInfoService";
+import {Line} from "vue-chartjs";
+import {useRoute, useRouter} from "vue-router";
 import Swal from "sweetalert2";
 import gsap from "gsap";
-import {useRoute} from "vue-router";
-import { APIData } from "../services/CoinInfoService";
 import {
-    Chart as ChartJS,
-    Title,
-    Tooltip,
-    Legend,
     CategoryScale,
+    Chart as ChartJS,
+    Legend,
     LinearScale,
     LineElement,
-    PointElement
+    PointElement,
+    Title,
+    Tooltip
 } from "chart.js";
 
 ChartJS.register(
@@ -51,31 +49,26 @@ export default {
         const router = useRouter();
         const routes = useRoute();
         const prices: Array<number> = [];
-        const pastSevenDays = [];
+        const pastDays: string[] = [];
         const chart = ref<any>({});
         try {
             rawInfo.value = await CoinServices.getCoinData(
                 props.coinID,
                 "usd",
-                7
+                30
             );
+
             rawInfo.value.marketData.prices.forEach(
                 // @ts-ignore
                 (singlePrice: Array<number>): void => {
+                    pastDays.push(new Date(singlePrice[0]).toLocaleDateString());
                     prices.push(singlePrice[1]);
                 }
             );
-            console.log(rawInfo.value.market_data.current_price);
-            const date = new Date();
-            for (let i = 0; i < 8; ++i) {
-                date.setDate(date.getDate() - i);
-                pastSevenDays.push(
-                    JSON.parse(JSON.stringify(date.toLocaleDateString()))
-                );
-            }
+
 
             chart.value = {
-                labels: pastSevenDays,
+                labels: pastDays,
                 datasets: [
                     {
                         label: "Price IN USD",
@@ -85,8 +78,7 @@ export default {
                 ]
             };
         } catch (e: any) {
-            // @ts-ignore
-            await router.push({ name: "404Error", params: {coinName: routes.params.coinID} });
+            await router.push({name: "404Error", params: {coinName: routes.params.coinID}});
         }
 
         function checkDescription(): void {
@@ -100,7 +92,7 @@ export default {
                 confirmButtonText: "Close",
                 width: "80%",
                 background: "#fff",
-                backdrop: "rgba(128, 128, 128,0.4)"
+                backdrop: "rgba(132, 137, 157,0.4)"
             });
         }
 
@@ -118,28 +110,28 @@ export default {
 <template>
     <div class="container">
         <div class="row fs-6 align-content-start">
-            <div class="col-sm-12 col-lg-5 col-md-8 p-4 custom-col">
+            <div class="col-sm-12 col-md-8 col-lg-5 p-4 custom-col">
                 <button
-                    @click="checkDescription"
                     id="description"
-                    class="custom-card shadow-lg p-2 d-flex flex-column justify-content-center align-items-center">
+                    class="custom-card shadow-lg p-2 d-flex flex-column justify-content-center align-items-center"
+                    @click="checkDescription">
                     <h1>{{ rawInfo.name }}</h1>
                     <img
-                        :src="rawInfo.image.small"
-                        :alt="rawInfo.name + ' image'" />
-                    <p>Click here to read more</p>
+                        :alt="rawInfo.name + ' image'"
+                        :src="rawInfo.image.small"/>
+                    <p class="text-decoration-underline">Click here to read more</p>
                 </button>
             </div>
-            <div class="col-sm-12 col-lg-3 col-md-4 p-4 custom-col">
+            <div class="col-sm-12 col-md-4 col-lg-3 p-4 custom-col">
                 <div class="custom-card p-2">
                     <h3>Hashing algorithm:</h3>
-                    <br />
+                    <br/>
                     <span>{{
-                        rawInfo.hashing_algorithm || "Not accessible"
-                    }}</span>
+                            rawInfo.hashing_algorithm || "Not accessible"
+                        }}</span>
                 </div>
             </div>
-            <div class="col-sm-12 col-lg-4 col-md-7 p-4 custom-col">
+            <div class="col-sm-12 col-md-7 col-lg-4 p-4 custom-col">
                 <div class="custom-card p-2">
                     <p>
                         Price in Dollar:
@@ -163,21 +155,19 @@ export default {
                     </p>
                 </div>
             </div>
-            <div class="col-sm-12 col-lg-3 col-md-5 p-4 custom-col">
-                <div class="custom-card p-2">
-                    <h3>random shit</h3>
-                </div>
-            </div>
-            <div class="col-sm-12 col-lg-4 col-md-3 p-4 custom-col">
+            <div class="col-sm-12 col-md-5 col-lg-3 p-4 custom-col">
                 <div class="custom-card p-2">
                     <h3>Rank in Coingecko</h3>
-                    <br />
+                    <br/>
                     <span>{{ rawInfo.coingecko_rank }}</span>
                 </div>
             </div>
-            <div class="col-sm-12 col-lg-5 col-md-9 p-4 custom-col">
+            <div class="col-sm-12 col-md-3 col-lg-4 p-4 custom-col">
+                <div class="custom-card p-2"></div>
+            </div>
+            <div class="col-sm-12 col-md-9 col-lg-5 p-4 custom-col">
                 <div class="custom-card p-2">
-                    <Line :chart-data="chart" />
+                    <Line :chart-data="chart"/>
                 </div>
             </div>
         </div>
@@ -186,6 +176,7 @@ export default {
 <style scoped>
 .custom-col {
     min-height: 36%;
+    max-height: 80%;
     transform: scale(0.8);
 }
 
@@ -198,6 +189,10 @@ export default {
     box-shadow: rgba(0, 0, 0, 0.16) 0 10px 36px 0, rgba(0, 0, 0, 0.06) 0 0 0 1px;
     -webkit-backdrop-filter: blur(5px);
     border-radius: 10px;
+}
+
+.custom-card:hover {
+    border: 1px solid #808080;
 }
 
 </style>
