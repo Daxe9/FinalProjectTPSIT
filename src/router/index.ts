@@ -16,6 +16,7 @@ const routes = [
     {
         path: "/404-error",
         name: "404Error",
+        props: true,
         component: () => import("../views/404Error.vue")
     }
 ];

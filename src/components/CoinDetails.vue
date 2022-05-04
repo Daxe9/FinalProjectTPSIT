@@ -5,6 +5,7 @@ import { Line } from "vue-chartjs";
 import { useRouter } from "vue-router";
 import Swal from "sweetalert2";
 import gsap from "gsap";
+import {useRoute} from "vue-router";
 import { APIData } from "../services/CoinInfoService";
 import {
     Chart as ChartJS,
@@ -48,6 +49,7 @@ export default {
 
         const rawInfo = ref<APIData>();
         const router = useRouter();
+        const routes = useRoute();
         const prices: Array<number> = [];
         const pastSevenDays = [];
         const chart = ref<any>({});
@@ -83,11 +85,11 @@ export default {
                 ]
             };
         } catch (e: any) {
-            await router.push({ name: "404Error" });
+            // @ts-ignore
+            await router.push({ name: "404Error", params: {coinName: routes.params.coinID} });
         }
 
         function checkDescription(): void {
-            // @ts-ignore
             Swal.fire({
                 title: "Description",
                 html:
@@ -98,8 +100,7 @@ export default {
                 confirmButtonText: "Close",
                 width: "80%",
                 background: "#fff",
-                //rgb(66, 211, 146)
-                backdrop: "rgba(66, 211, 146,0.4)"
+                backdrop: "rgba(128, 128, 128,0.4)"
             });
         }
 
@@ -198,4 +199,5 @@ export default {
     -webkit-backdrop-filter: blur(5px);
     border-radius: 10px;
 }
+
 </style>

@@ -1,12 +1,15 @@
-<script lang="ts" setup>
+<script setup lang="ts" >
 import sadFace from '../assets/sad-face.png';
+defineProps<{
+    coinName: string;
+}>()
 </script>
 <template>
     <div title="click me mf" class="d-flex flex-row justify-content-center align-items-center ">
         <router-link :to="{ name: 'Home' }" class="text-decoration-none custom-link">
             <p>Click here will bring you to the home</p>
             <img class="custom-image " :src="sadFace" alt="a sad face">
-            <h3>Page not found</h3>
+            <h3>*{{ coinName || "Resource" }}* not found</h3>
         </router-link>
     </div>
 </template>
