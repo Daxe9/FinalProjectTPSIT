@@ -1,8 +1,8 @@
 <script lang="ts">
-import {onMounted, ref} from "vue";
-import CoinServices, {APIData} from "../services/CoinInfoService";
-import {Line} from "vue-chartjs";
-import {useRoute, useRouter} from "vue-router";
+import { onMounted, ref } from "vue";
+import CoinServices, { APIData } from "../services/CoinInfoService";
+import { Line } from "vue-chartjs";
+import { useRoute, useRouter } from "vue-router";
 import Swal from "sweetalert2";
 import gsap from "gsap";
 import {
@@ -61,11 +61,12 @@ export default {
             rawInfo.value.marketData.prices.forEach(
                 // @ts-ignore
                 (singlePrice: Array<number>): void => {
-                    pastDays.push(new Date(singlePrice[0]).toLocaleDateString());
+                    pastDays.push(
+                        new Date(singlePrice[0]).toLocaleDateString()
+                    );
                     prices.push(singlePrice[1]);
                 }
             );
-
 
             chart.value = {
                 labels: pastDays,
@@ -78,7 +79,10 @@ export default {
                 ]
             };
         } catch (e: any) {
-            await router.push({name: "404Error", params: {coinName: routes.params.coinID}});
+            await router.push({
+                name: "404Error",
+                params: { coinName: routes.params.coinID }
+            });
         }
 
         function checkDescription(): void {
@@ -118,21 +122,41 @@ export default {
                     <h1>{{ rawInfo.name }}</h1>
                     <img
                         :alt="rawInfo.name + ' image'"
-                        :src="rawInfo.image.small"/>
-                    <p class="text-decoration-underline">Click here to read more</p>
+                        :src="rawInfo.image.small" />
+                    <p class="text-decoration-underline">
+                        Click here to read more
+                    </p>
                 </button>
             </div>
             <div class="col-sm-12 col-md-4 col-lg-3 p-4 custom-col">
                 <div class="custom-card p-2">
                     <h3>Hashing algorithm:</h3>
-                    <br/>
+                    <br />
                     <span>{{
-                            rawInfo.hashing_algorithm || "Not accessible"
-                        }}</span>
+                        rawInfo.hashing_algorithm || "Not accessible"
+                    }}</span>
                 </div>
             </div>
             <div class="col-sm-12 col-md-7 col-lg-4 p-4 custom-col">
                 <div class="custom-card p-2">
+                    <h3
+                        :style="{
+                            color:
+                                rawInfo.market_data
+                                    .price_change_percentage_24h > 0
+                                    ? 'green'
+                                    : 'red'
+                        }">
+                        {{
+                            (rawInfo.market_data.price_change_percentage_24h > 0
+                                ? "+ "
+                                : "- ") +
+                            Math.abs(
+                                rawInfo.market_data.price_change_percentage_24h
+                            ) +
+                            "%"
+                        }}
+                    </h3>
                     <p>
                         Price in Dollar:
                         {{ rawInfo.market_data.current_price.usd }}$
@@ -158,7 +182,7 @@ export default {
             <div class="col-sm-12 col-md-5 col-lg-3 p-4 custom-col">
                 <div class="custom-card p-2">
                     <h3>Rank in Coingecko</h3>
-                    <br/>
+                    <br />
                     <span>{{ rawInfo.coingecko_rank }}</span>
                 </div>
             </div>
@@ -167,7 +191,7 @@ export default {
             </div>
             <div class="col-sm-12 col-md-9 col-lg-5 p-4 custom-col">
                 <div class="custom-card p-2">
-                    <Line :chart-data="chart"/>
+                    <Line :chart-data="chart" />
                 </div>
             </div>
         </div>
@@ -194,5 +218,4 @@ export default {
 .custom-card:hover {
     border: 1px solid #808080;
 }
-
 </style>

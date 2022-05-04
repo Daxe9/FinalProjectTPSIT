@@ -1,6 +1,14 @@
-import { createRouter, createWebHistory } from "vue-router";
+import {
+    createRouter,
+    createWebHistory,
+    NavigationGuardNext,
+    RouteLocationNormalized
+} from "vue-router";
+import CoinService from "../services/CoinInfoService";
 import CoinDetails from "../views/CoinWrapper.vue";
 import CoinsSearch from "../views/CoinsSearch.vue";
+import TopCoins from "../views/TopCoins.vue";
+import { useStore } from "vuex";
 
 const routes = [
     {
@@ -12,6 +20,21 @@ const routes = [
         path: "/coins/:coinID",
         name: "CoinDetails",
         component: CoinDetails
+    },
+    {
+        path: "/topcoins",
+        name: "TopCoins",
+        component: TopCoins,
+        props: true,
+        beforeEnter: async (
+            to: RouteLocationNormalized,
+            from: RouteLocationNormalized,
+            next: NavigationGuardNext
+        ) => {
+            const data = await CoinService.getTopCoins("usd");
+            to.params.topcoins = data;
+            next();
+        }
     },
     {
         path: "/404-error",

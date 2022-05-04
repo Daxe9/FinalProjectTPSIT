@@ -36,11 +36,14 @@ interface RawData {
         jpy: number;
         aud: number;
     };
+    price_change_percentage_24h: number;
     coingecko_rank: number;
 }
 export interface APIData extends RawData {
     marketData: MarketData;
 }
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export default {
     getRawData(coinID: string) {
@@ -80,7 +83,7 @@ export default {
         currency: string,
         days: number,
         interval: string = "daily"
-    ): Promise<any> {
+    ): Promise<APIData> {
         return Promise.all([
             this.getRawData(coinID),
             this.getMarketData(coinID, currency, days, interval)
@@ -92,7 +95,27 @@ export default {
                 };
             })
             .catch((error) => {
-                return new Error(error);
+                throw new Error(error);
+            });
+    },
+    async getTopCoins(
+        currency: string,
+        order: string = "market_cap",
+        per_page: number = 20,
+        page: number = 1,
+        sparkline: boolean = false
+    ) {
+        return apiClient
+            .get(
+                `coins/markets?vs_currency=${currency
+                    .toLowerCase()
+                    .trim()}&order=${order
+                    .toLowerCase()
+                    .trim()}&per_page=${per_page}&page=${page}&sparkline=${sparkline}`
+            )
+            .then((res: AxiosResponse) => res.data)
+            .catch(() => {
+                throw new Error("Internal Server Error 500");
             });
     }
 };

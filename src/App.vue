@@ -2,11 +2,13 @@
 
 <template>
     <div id="app" class="d-flex flex-column">
-        <nav class="navbar p-3">
+        <nav class="navbar p-3 justify-content-center gap-3">
             <router-link class="link mb-0 h3" :to="{ name: 'Home' }"
                 >Home</router-link
             >
-            <span class="badge">TEST</span>
+            <router-link class="link mb-0 h3" :to="{ name: 'TopCoins' }">
+                Coin Rank
+            </router-link>
         </nav>
         <router-view class="r-view" />
     </div>
@@ -25,8 +27,8 @@ body {
 }
 
 nav {
-    background-color: #43aa8b;
-    color: #ffffff;
+    background-color: #42d392;
+    color: #1c1f30;
 }
 
 body {
@@ -39,8 +41,13 @@ body {
 .link:visited,
 .link:hover,
 .link:active {
+    border: 1px solid transparent;
+    padding: 0.2em;
+    background-color: white;
+    border-radius: 10px;
+    text-align: left;
     text-decoration: none;
-    color: #ffffff !important;
+    color: #1c1f30 !important;
 }
 nav {
     flex-basis: 6%;
