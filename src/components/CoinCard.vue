@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 defineProps<{
     info: {
         price_change_percentage_24h: number;
@@ -13,17 +13,27 @@ defineProps<{
 </script>
 
 <template>
-    <div class="d-flex justify-content-center">
-        <h3>{{index + " "}}</h3>
-
-        <h3>{{ info.name }}</h3>
-        <img :src="info.image" alt="">
+    <div
+        :style="{
+            borderColor: info.price_change_percentage_24h > 0 ? 'green' : 'red'
+        }"
+        class="custom-card d-flex justify-content-between w-75 mx-auto my-2">
+        <div class="d-flex justify-content-start">
+            <h1>{{ index }}. {{ info.name }}</h1>
+            <p>{{ info.price_change_percentage_24h }}%</p>
+        </div>
+        <img :src="info.image" :alt="info.name" />
     </div>
 </template>
 
 <style scoped>
 div img {
-    max-width: 4em;
+    max-width: 5em;
 }
 
+.custom-card {
+    padding: 1.2em;
+    border: 2px solid grey;
+    border-radius: 2em;
+}
 </style>
