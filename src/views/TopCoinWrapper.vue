@@ -1,19 +1,16 @@
 <script setup lang="ts">
-import { useRoute } from "vue-router";
 import { defineAsyncComponent } from "vue";
 import Loading from "../components/Loading.vue";
 
-const route = useRoute();
-const CoinDetails = defineAsyncComponent(
-    () => import("../components/CoinDetails.vue")
+const TopCoins = defineAsyncComponent(
+    () => import("../components/TopCoins.vue")
 );
 </script>
-
 <template>
     <div>
         <suspense>
             <template #default>
-                <CoinDetails :coinID="route.params.coinID" />
+                <TopCoins />
             </template>
             <template #fallback>
                 <Loading />

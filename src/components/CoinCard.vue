@@ -1,28 +1,11 @@
-<script setup lang="ts">
-import {useRouter} from "vue-router";
+<script lang="ts" setup>
+import { CoinInfo } from "../utils";
 
-const router = useRouter()
 const props = defineProps<{
-    info: {
-        price_change_percentage_24h: number;
-        total_volume: number;
-        market_cap: number;
-        current_price: number;
-        name: string;
-        image: string;
-    };
+    info: CoinInfo;
     index: number;
 }>();
-
 const trend: number = props.info.price_change_percentage_24h;
-function onClick() {
-    router.push({
-        name: "CoinDetails",
-        params: {
-            coinID: 'bitcoin'
-        }
-    })
-}
 </script>
 
 <template>
@@ -30,25 +13,40 @@ function onClick() {
         :style="{
             borderColor: trend > 0 ? 'green' : 'red'
         }"
-        class="custom-card p-3 m-2"
-        @click="onClick"
-    >
-        <div class="d-flex justify-content-between">
-            <div class="d-flex align-items-center">
-                <span class="h1 m-0">{{ index }}.</span>
-                <img class="custom-image" :src="info.image" :alt="info.name" />
+        :title="info.name"
+        class="custom-card p-3 m-2">
+        <div class="row d-flex justify-content-between">
+            <div
+                class="col-12 col-sm-6 col-md-8 col-xl-9 d-flex align-items-center flex-wrap">
+                <span class="custom-text m-0">{{ index }}.</span>
+                <img :alt="info.name" :src="info.image" class="custom-image" />
 
-                <span class="h1 m-0">{{ info.name }}</span>
+                <span class="custom-text m-0">{{ info.name }}</span>
             </div>
-            <div class="d-flex">
-                <span class="h3">{{ info.current_price }}$</span>
-                <span
-                    class="h6"
-                    :style="{
-                    color: trend > 0 ? 'green' : 'red'
-                }"
-                >&nbsp;{{ trend > 0 ? "+" : "-" }}{{ Math.abs(trend) }}%</span
+            <div class="col-12 col-sm-6 col-md-4 col-xl-3 d-flex">
+                <span class="h3"
+                    ><b>{{ info.current_price }}$</b></span
                 >
+                <span
+                    :style="{
+                        color: trend > 0 ? 'green' : 'red'
+                    }"
+                    class="h6"
+                    >&nbsp;{{ trend > 0 ? "+" : "-"
+                    }}{{ Math.abs(trend) }}%</span
+                >
+            </div>
+        </div>
+        <div class="row d-flex justify-content-between">
+            <div class="col-12 col-sm-6 col-md-8 col-xl-9">
+                <p class="h6 text-start">
+                    Total Volume: <u>{{ info.total_volume }}$</u>
+                </p>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-xl-3">
+                <p class="h6 text-start">
+                    Market Cap: <u>{{ info.market_cap }}$</u>
+                </p>
             </div>
         </div>
     </div>
@@ -60,10 +58,21 @@ div img {
     max-width: 2.8em;
 }
 
+.custom-text {
+    font-size: 3vw;
+}
+
 .custom-card {
+    cursor: pointer;
     margin: 0.2em;
     box-sizing: border-box;
     border: 1px solid grey;
     border-radius: 2em;
+}
+
+@media screen and (max-width: 600px) {
+    .custom-text {
+        font-size: 17px;
+    }
 }
 </style>

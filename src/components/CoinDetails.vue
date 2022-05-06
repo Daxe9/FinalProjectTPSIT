@@ -1,6 +1,6 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
-import CoinServices, { APIData } from "../services/CoinInfoService";
+import CoinServices from "../services/CoinInfoService";
 import { Line } from "vue-chartjs";
 import { useRoute, useRouter } from "vue-router";
 import Swal from "sweetalert2";
@@ -15,6 +15,7 @@ import {
     Title,
     Tooltip
 } from "chart.js";
+import { APIData } from "../utils";
 
 ChartJS.register(
     Title,
@@ -44,25 +45,20 @@ export default {
                 }
             });
         });
-
-        const rawInfo = ref<APIData>();
+        let rawInfo: APIData;
         const router = useRouter();
         const routes = useRoute();
         const prices: Array<number> = [];
         const pastDays: string[] = [];
         const chart = ref<any>({});
         try {
-            rawInfo.value = await CoinServices.getCoinData(
-                props.coinID,
-                "usd",
-                30
-            );
+            rawInfo = await CoinServices.getCoinData(props.coinID, "usd", 7);
 
-            rawInfo.value.marketData.prices.forEach(
+            rawInfo.marketData.prices.forEach(
                 // @ts-ignore
                 (singlePrice: Array<number>): void => {
                     pastDays.push(
-                        new Date(singlePrice[0]).toLocaleDateString()
+                        new Date(singlePrice[0]).toLocaleDateString("IT-it")
                     );
                     prices.push(singlePrice[1]);
                 }
@@ -72,7 +68,7 @@ export default {
                 labels: pastDays,
                 datasets: [
                     {
-                        label: "Price IN USD",
+                        label: "Price in USD",
                         backgroundColor: "#000",
                         data: prices
                     }
@@ -90,11 +86,11 @@ export default {
                 title: "Description",
                 html:
                     "<p style='text-align: justify'>" +
-                    rawInfo.value.description.en +
+                    rawInfo.description.en +
                     "</p>",
                 icon: "info",
                 confirmButtonText: "Close",
-                width: "80%",
+                width: "90%",
                 background: "#fff",
                 backdrop: "rgba(132, 137, 157,0.4)"
             });
@@ -201,7 +197,7 @@ export default {
 .custom-col {
     min-height: 36%;
     max-height: 80%;
-    transform: scale(0.8);
+    transform: scale(0.85);
 }
 
 .custom-card {

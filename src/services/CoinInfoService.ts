@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from "axios";
+import { pick, RawData, MarketData, APIData } from "../utils";
 
 const apiClient = axios.create({
     baseURL: "https://api.coingecko.com/api/v3/",
@@ -8,42 +9,6 @@ const apiClient = axios.create({
         "Content-Type": "application/json"
     }
 });
-
-function pick(obj: any, [...keys]) {
-    return Object.fromEntries(
-        keys.filter((key) => key in obj).map((key) => [key, obj[key]])
-    );
-}
-interface MarketData {
-    market_cap: Array<number>;
-    prices: Array<number>;
-    total_volumes: Array<number>;
-}
-
-// make an interface with these types "name", "image", "description", "hashing_algorithm", "market_data", "coingecko_rank"
-interface RawData {
-    name: string;
-    image: any;
-    description: {
-        en: string;
-    };
-    hashing_algorithm: string;
-    market_data: any;
-    current_price: {
-        usd: number;
-        eur: number;
-        cad: number;
-        jpy: number;
-        aud: number;
-    };
-    price_change_percentage_24h: number;
-    coingecko_rank: number;
-}
-export interface APIData extends RawData {
-    marketData: MarketData;
-}
-
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export default {
     getRawData(coinID: string) {
