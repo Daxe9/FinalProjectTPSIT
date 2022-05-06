@@ -15,8 +15,9 @@ function goToCoin() {
 
 <template>
     <div
-        class="d-flex justify-content-center align-items-center"
+        class="d-flex flex-column justify-content-center align-items-center"
     >
+        <h1 class="title">Search for your favourite coin in one click.</h1>
         <form
             @submit.prevent="goToCoin">
             <div class="d-flex flex-column mb-5">
@@ -49,6 +50,10 @@ function goToCoin() {
 </template>
 
 <style scoped>
+.title {
+    margin-bottom: 2.4em;
+}
+
 div {
     height: fit-content;
 }
