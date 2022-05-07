@@ -122,6 +122,6 @@ input {
 }
 
 .custom-shape-divider-bottom-1651858819 .shape-fill {
-    fill: #42d392;
+    fill: #222024;
 }
 </style>

@@ -31,8 +31,8 @@ body {
 }
 
 nav {
-    background-color: #42d392;
-    color: #1c1f30;
+    background-color: #222024;
+    color: #222024;
 }
 
 body {
@@ -65,7 +65,7 @@ nav {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: #2c3e50;
+    color: #222024;
     display: flex;
     height: 100%;
     flex-direction: column;

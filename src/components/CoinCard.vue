@@ -17,13 +17,13 @@ const trend: number = props.info.price_change_percentage_24h;
         class="custom-card p-3 m-2">
         <div class="row d-flex justify-content-between">
             <div
-                class="col-12 col-sm-6 col-md-8 col-xl-9 d-flex align-items-center flex-wrap">
+                class="col-12 col-sm-6 col-md-7 col-xl-9 d-flex align-items-center flex-wrap">
                 <span class="custom-text m-0">{{ index }}.</span>
                 <img :alt="info.name" :src="info.image" class="custom-image" />
 
                 <span class="custom-text m-0">{{ info.name }}</span>
             </div>
-            <div class="col-12 col-sm-6 col-md-4 col-xl-3 d-flex">
+            <div class="col-12 col-sm-6 col-md-5 col-xl-3 d-flex">
                 <span class="h3"
                     ><b>{{ info.current_price }}$</b></span
                 >
@@ -38,12 +38,12 @@ const trend: number = props.info.price_change_percentage_24h;
             </div>
         </div>
         <div class="row d-flex justify-content-between">
-            <div class="col-12 col-sm-6 col-md-8 col-xl-9">
+            <div class="col-12 col-sm-6 col-md-7 col-xl-9">
                 <p class="h6 text-start">
                     Total Volume: <u>{{ info.total_volume }}$</u>
                 </p>
             </div>
-            <div class="col-12 col-sm-6 col-md-4 col-xl-3">
+            <div class="col-12 col-sm-6 col-md-5 col-xl-3">
                 <p class="h6 text-start">
                     Market Cap: <u>{{ info.market_cap }}$</u>
                 </p>

@@ -4,7 +4,7 @@
 
 #### For linux users, run in the terminal the following command to install dependencies and view the page
 
-```
+```bash
 sh viewPage.sh
 ```
 
@@ -12,12 +12,24 @@ sh viewPage.sh
 
 to install dependencies, run the following command in the terminal
 
+```bash
+npm install
 ```
-npm install / yarn install
+
+or
+
+```bash
+yarn install
 ```
 
 to view the page
 
 ```
-npm run dev / yarn dev
+npm run dev
+```
+
+or
+
+```bash
+yarn dev
 ```

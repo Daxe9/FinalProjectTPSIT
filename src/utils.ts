@@ -26,7 +26,17 @@ export interface RawData {
         en: string;
     };
     hashing_algorithm: string;
-    market_data: any;
+    market_data: {
+        price_change_24h: number;
+        total_volume: {
+            usd: number
+        };
+        market_cap: {
+            usd: number
+        }
+        circulating_supply: number;
+        total_supply: number;
+    };
     current_price: {
         usd: number;
         eur: number;
@@ -36,6 +46,10 @@ export interface RawData {
     };
     price_change_percentage_24h: number;
     coingecko_rank: number;
+    links: {
+        blockchain_site: Array<string>;
+        homepage: Array<string>;
+    };
 }
 export interface APIData extends RawData {
     marketData: MarketData;
