@@ -40,7 +40,7 @@ export default {
                 y: 200,
                 ease: "back",
                 stagger: {
-                    each: 0.25,
+                    each: 0.20,
                     from: "random"
                 }
             });

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import magnifyingGlass from "../assets/magnifying-glass.svg";
 
 const coinName = ref<string>("");
 const router = useRouter();
@@ -15,7 +16,12 @@ function goToCoin() {
 
 <template>
     <div class="d-flex flex-column justify-content-center align-items-center">
-        <h1 class="title">Search for your favourite coin in one click.</h1>
+        <VueWriter
+            class="title"
+            :array="['Search for your favourite coin in one click.']"
+            :typeSpeed="80"
+            :iterations="1"
+        />
         <form @submit.prevent="goToCoin">
             <div class="d-flex flex-column mb-5">
                 <label for="coin-name">Coin's Name</label>
@@ -31,7 +37,7 @@ function goToCoin() {
                         class="btn custom-button"
                         type="submit"
                         @click.prevent="goToCoin">
-                        Search
+                        <img :src="magnifyingGlass" alt="hehe">
                     </button>
                 </div>
             </div>
@@ -60,7 +66,8 @@ function goToCoin() {
 
 <style scoped>
 .title {
-    margin-bottom: 2.4em;
+    margin-bottom: 1.8em;
+    font-size: 32px;
 }
 
 div {
@@ -79,9 +86,14 @@ div {
 }
 
 .custom-button {
+    width: 4em;
     margin-right: 0.4em;
     border-radius: 5em;
     background-color: #42d392;
+}
+
+.custom-button img  {
+    width: 1em;
 }
 
 .custom-input {

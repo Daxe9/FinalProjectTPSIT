@@ -10,7 +10,11 @@
                 Coin Rank
             </router-link>
         </nav>
-        <router-view class="r-view" />
+        <router-view class="r-view" v-slot="{ Component }">
+            <transition name="fade">
+                <component :is="Component" />
+            </transition>
+        </router-view>
     </div>
 </template>
 
@@ -65,5 +69,12 @@ nav {
     display: flex;
     height: 100%;
     flex-direction: column;
+}
+
+.fade-enter-from {
+    opacity: 0;
+}
+.fade-enter-active {
+    transition: all 0.5s;
 }
 </style>
