@@ -54,6 +54,8 @@ export default {
         try {
             rawInfo = await CoinServices.getCoinData(props.coinID, "usd", 7);
 
+
+            console.log(rawInfo.market_data)
             rawInfo.marketData.prices.forEach(
                 // @ts-ignore
                 (singlePrice: Array<number>): void => {
@@ -128,7 +130,7 @@ export default {
                 <div class="custom-card p-2">
                     <h3>Hashing algorithm:</h3>
                     <br />
-                    <span>{{
+                    <span class="h1 custom-text">{{
                         rawInfo.hashing_algorithm || "Not accessible"
                     }}</span>
                 </div>
@@ -179,13 +181,44 @@ export default {
             </div>
             <div class="col-sm-12 col-md-5 col-lg-3 p-4 custom-col">
                 <div class="custom-card p-2">
-                    <h3>Rank in Coingecko</h3>
-                    <br />
-                    <span>{{ rawInfo.coingecko_rank }}</span>
+                    <h1>Market data:</h1>
+                    <div class="text-start">
+                        <p>Price change in 24h: {{rawInfo.market_data.price_change_24h}}$</p>
+                        <p>Market Cap: {{rawInfo.market_data.market_cap.usd}}$</p>
+                        <p>Total Volume: {{rawInfo.market_data.total_volume.usd}}$</p>
+                        <p>Total Supply: {{rawInfo.market_data.total_supply}}$</p>
+                        <p>Circulating Supply: {{rawInfo.market_data.circulating_supply}}$</p>
+                    </div>
                 </div>
+
             </div>
             <div class="col-sm-12 col-md-3 col-lg-4 p-4 custom-col">
-                <div class="custom-card p-2"></div>
+                <div class="custom-card p-2">
+                    <h3>Blockchain Sites</h3>
+                    <ul class="p-1">
+                        <li
+                            class="list-unstyled text-start"
+                            v-for="(site, index) in rawInfo.links
+                                .blockchain_site"
+                            :key="index"
+                            :title="site"
+                            v-show="site">
+                            <a :href="site" target="_blank">{{ site.split("/")[2] }}</a>
+                        </li>
+                    </ul>
+                    <h3>Homepages</h3>
+                    <ul class="p-1">
+                        <li
+                            class="list-unstyled text-start"
+                            v-for="(site, index) in rawInfo.links
+                                .homepage"
+                            :key="index"
+                            :title="site"
+                            v-show="site">
+                            <a :href="site" target="_blank">{{ site.split("/")[2] }}</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div class="col-sm-12 col-md-9 col-lg-5 p-4 custom-col">
                 <div class="custom-card p-2">
@@ -201,10 +234,12 @@ export default {
     max-height: 80%;
     transform: scale(0.85);
 }
-
+.custom-text {
+    color: #2a9d8f;
+}
 .custom-card {
     width: 100%;
-    border: 1px solid #ffba08;
+    border: 1px solid #fca311;
     height: 100%;
     overflow: auto;
     background: white;

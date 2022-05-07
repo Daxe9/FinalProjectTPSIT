@@ -21,7 +21,8 @@ export default {
                     "description",
                     "hashing_algorithm",
                     "market_data",
-                    "coingecko_rank"
+                    "coingecko_rank",
+                    "links"
                 ]);
             })
             .catch(() => {
@@ -54,6 +55,10 @@ export default {
             this.getMarketData(coinID, currency, days, interval)
         ])
             .then(([basicData, marketData]) => {
+                basicData.links = pick(basicData.links, [
+                    "blockchain_site",
+                    "homepage"
+                ]);
                 return {
                     ...basicData,
                     marketData
