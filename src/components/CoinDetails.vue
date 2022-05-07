@@ -40,7 +40,7 @@ export default {
                 y: 200,
                 ease: "back",
                 stagger: {
-                    each: 0.20,
+                    each: 0.2,
                     from: "random"
                 }
             });
@@ -153,26 +153,28 @@ export default {
                             "%"
                         }}
                     </h3>
-                    <p>
-                        Price in Dollar:
-                        {{ rawInfo.market_data.current_price.usd }}$
-                    </p>
-                    <p>
-                        Price in Euro:
-                        {{ rawInfo.market_data.current_price.eur }}$
-                    </p>
-                    <p>
-                        Price in Canadian Dollar:
-                        {{ rawInfo.market_data.current_price.cad }}$
-                    </p>
-                    <p>
-                        Price in Japanese Yen:
-                        {{ rawInfo.market_data.current_price.jpy }}$
-                    </p>
-                    <p>
-                        Price in Australian Dollar:
-                        {{ rawInfo.market_data.current_price.aud }}$
-                    </p>
+                    <div class="text-center">
+                        <p>
+                            Price in Dollar:
+                            {{ rawInfo.market_data.current_price.usd }}$
+                        </p>
+                        <p>
+                            Price in Euro:
+                            {{ rawInfo.market_data.current_price.eur }}€
+                        </p>
+                        <p>
+                            Price in Canadian Dollar:
+                            {{ rawInfo.market_data.current_price.cad }}$
+                        </p>
+                        <p>
+                            Price in Japanese Yen:
+                            {{ rawInfo.market_data.current_price.jpy }}¥
+                        </p>
+                        <p>
+                            Price in Australian Dollar:
+                            {{ rawInfo.market_data.current_price.aud }}$
+                        </p>
+                    </div>
                 </div>
             </div>
             <div class="col-sm-12 col-md-5 col-lg-3 p-4 custom-col">

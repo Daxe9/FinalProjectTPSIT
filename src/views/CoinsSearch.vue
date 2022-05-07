@@ -20,8 +20,7 @@ function goToCoin() {
             class="title"
             :array="['Search for your favourite coin in one click.']"
             :typeSpeed="80"
-            :iterations="1"
-        />
+            :iterations="1" />
         <form @submit.prevent="goToCoin">
             <div class="d-flex flex-column mb-5">
                 <label for="coin-name">Coin's Name</label>
@@ -37,7 +36,7 @@ function goToCoin() {
                         class="btn custom-button"
                         type="submit"
                         @click.prevent="goToCoin">
-                        <img :src="magnifyingGlass" alt="hehe">
+                        <img :src="magnifyingGlass" alt="hehe" />
                     </button>
                 </div>
             </div>
@@ -92,7 +91,7 @@ div {
     background-color: #42d392;
 }
 
-.custom-button img  {
+.custom-button img {
     width: 1em;
 }
 

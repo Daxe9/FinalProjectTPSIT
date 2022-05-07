@@ -13,7 +13,8 @@ defineProps<{
             :to="{ name: 'Home' }"
             class="text-decoration-none custom-link py-3">
             <p>Click here, we'll bring you to the home</p>
-            <div class="d-flex flex-row-reverse justify-content-center align-items-end">
+            <div
+                class="d-flex flex-row-reverse justify-content-center align-items-end">
                 <img :src="sadFace" alt="a sad face" class="custom-image" />
                 <div>
                     <p class="mb-0 custom-subtitle">Satoshi disapproves</p>
