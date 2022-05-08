@@ -27,23 +27,25 @@ export interface RawData {
     };
     hashing_algorithm: string;
     market_data: {
+        price_change_percentage_24h: number;
         price_change_24h: number;
         total_volume: {
-            usd: number
+            usd: number;
         };
         market_cap: {
-            usd: number
-        }
+            usd: number;
+        };
         circulating_supply: number;
         total_supply: number;
+        current_price: {
+            usd: number;
+            eur: number;
+            cad: number;
+            jpy: number;
+            aud: number;
+        };
     };
-    current_price: {
-        usd: number;
-        eur: number;
-        cad: number;
-        jpy: number;
-        aud: number;
-    };
+
     price_change_percentage_24h: number;
     coingecko_rank: number;
     links: {

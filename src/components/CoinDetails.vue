@@ -54,8 +54,7 @@ export default {
         try {
             rawInfo = await CoinServices.getCoinData(props.coinID, "usd", 7);
 
-
-            console.log(rawInfo.market_data)
+            console.log(rawInfo.market_data);
             rawInfo.marketData.prices.forEach(
                 // @ts-ignore
                 (singlePrice: Array<number>): void => {
@@ -183,14 +182,28 @@ export default {
                 <div class="custom-card p-2">
                     <h1>Market data:</h1>
                     <div class="text-start">
-                        <p>Price change in 24h: {{rawInfo.market_data.price_change_24h}}$</p>
-                        <p>Market Cap: {{rawInfo.market_data.market_cap.usd}}$</p>
-                        <p>Total Volume: {{rawInfo.market_data.total_volume.usd}}$</p>
-                        <p>Total Supply: {{rawInfo.market_data.total_supply}}$</p>
-                        <p>Circulating Supply: {{rawInfo.market_data.circulating_supply}}$</p>
+                        <p>
+                            Price change in 24h:
+                            {{ rawInfo.market_data.price_change_24h }}$
+                        </p>
+                        <p>
+                            Market Cap:
+                            {{ rawInfo.market_data.market_cap.usd }}$
+                        </p>
+                        <p>
+                            Total Volume:
+                            {{ rawInfo.market_data.total_volume.usd }}$
+                        </p>
+                        <p>
+                            Total Supply:
+                            {{ rawInfo.market_data.total_supply }}$
+                        </p>
+                        <p>
+                            Circulating Supply:
+                            {{ rawInfo.market_data.circulating_supply }}$
+                        </p>
                     </div>
                 </div>
-
             </div>
             <div class="col-sm-12 col-md-3 col-lg-4 p-4 custom-col">
                 <div class="custom-card p-2">
@@ -203,19 +216,22 @@ export default {
                             :key="index"
                             :title="site"
                             v-show="site">
-                            <a :href="site" target="_blank">{{ site.split("/")[2] }}</a>
+                            <a :href="site" target="_blank">{{
+                                site.split("/")[2]
+                            }}</a>
                         </li>
                     </ul>
                     <h3>Homepages</h3>
                     <ul class="p-1">
                         <li
                             class="list-unstyled text-start"
-                            v-for="(site, index) in rawInfo.links
-                                .homepage"
+                            v-for="(site, index) in rawInfo.links.homepage"
                             :key="index"
                             :title="site"
                             v-show="site">
-                            <a :href="site" target="_blank">{{ site.split("/")[2] }}</a>
+                            <a :href="site" target="_blank">{{
+                                site.split("/")[2]
+                            }}</a>
                         </li>
                     </ul>
                 </div>
