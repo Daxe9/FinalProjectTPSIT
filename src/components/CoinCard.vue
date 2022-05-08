@@ -11,7 +11,9 @@ const trend: number = props.info.price_change_percentage_24h;
 <template>
     <div
         :style="{
-            borderColor: trend > 0 ? 'green' : 'red'
+            borderColor: trend > 0 ? 'green' : 'red',
+            backgroundColor:
+                trend > 0 ? 'rgba(0, 255, 0, 0.03)' : 'rgba(255, 0, 0, 0.03)'
         }"
         :title="info.name"
         class="custom-card p-3 m-2">
@@ -24,7 +26,7 @@ const trend: number = props.info.price_change_percentage_24h;
                 <span class="custom-text m-0">{{ info.name }}</span>
             </div>
             <div class="col-12 col-sm-6 col-md-5 col-xl-3 d-flex">
-                <span class="h3"
+                <span class="h4"
                     ><b>{{ info.current_price }}$</b></span
                 >
                 <span

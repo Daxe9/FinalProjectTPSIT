@@ -53,6 +53,14 @@ export interface RawData {
         homepage: Array<string>;
     };
 }
+
+export interface TrendingCoin {
+    id: string;
+    name: string;
+    small: string;
+    price_btc: number;
+}
+
 export interface APIData extends RawData {
     marketData: MarketData;
 }

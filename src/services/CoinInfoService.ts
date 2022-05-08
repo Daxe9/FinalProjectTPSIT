@@ -87,5 +87,13 @@ export default {
             .catch(() => {
                 throw new Error("Internal Server Error 500");
             });
+    },
+    async getTrendingCoins() {
+        return apiClient
+            .get("search/trending")
+            .then((res: AxiosResponse) => res.data)
+            .catch(() => {
+                throw new Error("Internal Server Error 500");
+            });
     }
 };

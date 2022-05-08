@@ -9,6 +9,9 @@
             <router-link class="link mb-0 h3" :to="{ name: 'TopCoins' }">
                 Coin Rank
             </router-link>
+            <router-link class="link mb-0 h3" :to="{ name: 'TrendingCoins' }">
+                Trending Coins
+            </router-link>
         </nav>
         <router-view class="r-view" v-slot="{ Component }">
             <transition name="fade">
@@ -61,7 +64,7 @@ nav {
     flex-basis: 80%;
 }
 #app {
-    font-family: roboto-slap;
+    font-family: roboto-slap, serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;

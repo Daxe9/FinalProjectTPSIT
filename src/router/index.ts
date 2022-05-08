@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import CoinWrapper from "../views/CoinWrapper.vue";
 import CoinsSearch from "../views/CoinsSearch.vue";
 import TopCoinsWrapper from "../views/TopCoinWrapper.vue";
+import TrendingCoinsWrapper from "../views/TrendingCoinsWrapper.vue";
 
 const routes = [
     {
@@ -18,6 +19,11 @@ const routes = [
         path: "/topcoins",
         name: "TopCoins",
         component: TopCoinsWrapper
+    },
+    {
+        path: "/trending-coins",
+        name: "TrendingCoins",
+        component: TrendingCoinsWrapper
     },
     {
         path: "/404-error",

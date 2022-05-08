@@ -53,8 +53,6 @@ export default {
         const chart = ref<any>({});
         try {
             rawInfo = await CoinServices.getCoinData(props.coinID, "usd", 7);
-
-            console.log(rawInfo.market_data);
             rawInfo.marketData.prices.forEach(
                 // @ts-ignore
                 (singlePrice: Array<number>): void => {
