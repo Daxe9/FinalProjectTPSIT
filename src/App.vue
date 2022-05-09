@@ -43,7 +43,6 @@ body {
     height: 100vh;
 }
 
-
 .link,
 .link:link,
 .link:visited,
@@ -57,7 +56,6 @@ body {
     text-decoration: none;
     color: #1c1f30 !important;
 }
-
 
 nav {
     flex-basis: 6%;
@@ -88,13 +86,10 @@ nav {
     .link {
         font-size: 1em;
     }
-
 }
 @media (min-width: 600px) {
     .link {
         font-size: 1.8em;
     }
-
 }
-
 </style>
