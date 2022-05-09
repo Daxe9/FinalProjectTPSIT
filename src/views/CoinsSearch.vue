@@ -15,14 +15,14 @@ function goToCoin() {
 </script>
 
 <template>
-    <div class="d-flex flex-column justify-content-center align-items-center">
+    <div class="custom-container">
         <VueWriter
             class="title"
             :array="['Search for your favourite coin in one click.']"
             :typeSpeed="80"
             :iterations="1" />
         <form @submit.prevent="goToCoin">
-            <div class="d-flex flex-column mb-5">
+            <div class="d-flex flex-column mt-1">
                 <label for="coin-name">Coin's Name</label>
                 <div class="input-wrapper">
                     <input
@@ -64,8 +64,14 @@ function goToCoin() {
 </template>
 
 <style scoped>
+.custom-container {
+    margin-top: 18vh;
+    display: flex;
+    flex-direction: column;
+}
+
 .title {
-    margin-bottom: 1.8em;
+    margin-bottom: 1.8vh;
     font-size: 32px;
 }
 
@@ -74,6 +80,8 @@ div {
 }
 
 .input-wrapper {
+    margin: 0 auto;
+    width: fit-content;
     padding: 4px;
     border: #808080 1px solid;
     border-radius: 5em;

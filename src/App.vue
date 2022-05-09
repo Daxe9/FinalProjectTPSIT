@@ -3,13 +3,13 @@
 <template>
     <div id="app" class="d-flex flex-column">
         <nav class="navbar p-3 justify-content-center gap-3">
-            <router-link class="link mb-0 h3" :to="{ name: 'Home' }"
+            <router-link class="link mb-0" :to="{ name: 'Home' }"
                 >Home</router-link
             >
-            <router-link class="link mb-0 h3" :to="{ name: 'TopCoins' }">
+            <router-link class="link mb-0" :to="{ name: 'TopCoins' }">
                 Coin Rank
             </router-link>
-            <router-link class="link mb-0 h3" :to="{ name: 'TrendingCoins' }">
+            <router-link class="link mb-0" :to="{ name: 'TrendingCoins' }">
                 Trending Coins
             </router-link>
         </nav>
@@ -43,6 +43,7 @@ body {
     height: 100vh;
 }
 
+
 .link,
 .link:link,
 .link:visited,
@@ -56,6 +57,8 @@ body {
     text-decoration: none;
     color: #1c1f30 !important;
 }
+
+
 nav {
     flex-basis: 6%;
 }
@@ -80,4 +83,18 @@ nav {
 .fade-enter-active {
     transition: all 0.5s;
 }
+
+@media (max-width: 500px) {
+    .link {
+        font-size: 1em;
+    }
+
+}
+@media (min-width: 600px) {
+    .link {
+        font-size: 1.8em;
+    }
+
+}
+
 </style>
