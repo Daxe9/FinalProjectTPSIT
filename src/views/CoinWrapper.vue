@@ -4,6 +4,7 @@ import { defineAsyncComponent } from "vue";
 import Loading from "../components/Loading.vue";
 
 const route = useRoute();
+// define a async component
 const CoinDetails = defineAsyncComponent(
     () => import("../components/CoinDetails.vue")
 );
@@ -11,6 +12,7 @@ const CoinDetails = defineAsyncComponent(
 
 <template>
     <div>
+        <!-- while the async component is initializing display Loading component -->
         <suspense>
             <template #default>
                 <CoinDetails :coinID="route.params.coinID" />

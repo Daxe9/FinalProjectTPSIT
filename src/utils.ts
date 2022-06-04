@@ -1,3 +1,4 @@
+// currency details
 export interface CoinInfo {
     price_change_percentage_24h: number;
     total_volume: number;
@@ -7,18 +8,21 @@ export interface CoinInfo {
     image: string;
 }
 
+// return a new object with specified keys
 export function pick(obj: any, [...keys]) {
     return Object.fromEntries(
         keys.filter((key) => key in obj).map((key) => [key, obj[key]])
     );
 }
 
+// currency market data
 export interface MarketData {
     market_cap: Array<number>;
     prices: Array<number>;
     total_volumes: Array<number>;
 }
 
+// currency api data
 export interface RawData {
     name: string;
     image: any;
@@ -54,6 +58,7 @@ export interface RawData {
     };
 }
 
+// trending currencies
 export interface TrendingCoin {
     id: string;
     name: string;

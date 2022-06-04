@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import sadFace from "../assets/satoshi-nakamoto.png";
 
+// define currency name to display it
 defineProps<{
     coinName: string;
 }>();

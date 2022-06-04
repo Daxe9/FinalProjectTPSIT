@@ -8,6 +8,8 @@ const TrendingCoins = defineAsyncComponent(
 </script>
 <template>
     <div>
+        <!-- while the async component is initializing display Loading component -->
+
         <suspense>
             <template #default>
                 <TrendingCoins />

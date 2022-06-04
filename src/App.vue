@@ -1,7 +1,6 @@
-<script setup lang="ts"></script>
-
 <template>
     <div id="app" class="d-flex flex-column">
+        <!--- Header --->
         <nav class="navbar p-3 justify-content-center gap-3">
             <router-link class="link mb-0" :to="{ name: 'Home' }"
                 >Home</router-link
@@ -13,6 +12,7 @@
                 Trending Coins
             </router-link>
         </nav>
+        <!--- Main Content, routes --->
         <router-view class="r-view" v-slot="{ Component }">
             <transition name="fade">
                 <component :is="Component" />

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { CoinInfo } from "../utils";
 
+// get props from parent component
 const props = defineProps<{
     info: CoinInfo;
     index: number;

@@ -6,6 +6,7 @@ import magnifyingGlass from "../assets/magnifying-glass.svg";
 const coinName = ref<string>("");
 const router = useRouter();
 
+// function to handle the search
 function goToCoin() {
     router.push({
         name: "CoinDetails",
@@ -16,11 +17,13 @@ function goToCoin() {
 
 <template>
     <div class="custom-container">
+        <!-- homepage writter -->
         <VueWriter
             class="title"
             :array="['Search for your favourite coin in one click.']"
             :typeSpeed="80"
             :iterations="1" />
+        <!-- form -->
         <form @submit.prevent="goToCoin">
             <div class="d-flex flex-column mt-1">
                 <label for="coin-name">Coin's Name</label>
@@ -41,6 +44,7 @@ function goToCoin() {
                 </div>
             </div>
         </form>
+        <!-- bottom shadow -->
         <div class="custom-shape-divider-bottom-1651858819">
             <svg
                 data-name="Layer 1"

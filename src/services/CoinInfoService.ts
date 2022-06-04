@@ -11,7 +11,7 @@ const apiClient = axios.create({
 });
 
 export default {
-    getRawData(coinID: string) {
+    getRawData(coinID: string): Promise<RawData> {
         return apiClient
             .get(`coins/${coinID}`)
             .then((res: AxiosResponse<RawData>): RawData => {
@@ -34,7 +34,7 @@ export default {
         currency: string,
         days: number,
         interval: string = "daily"
-    ) {
+    ): Promise<MarketData> {
         return apiClient
             .get(
                 `coins/${coinID}/market_chart?vs_currency=${currency.toLowerCase()}&days=${days}&interval=${interval}`
@@ -44,7 +44,7 @@ export default {
                 throw new Error("No coin with given ID found");
             });
     },
-    async getCoinData(
+    getCoinData(
         coinID: string,
         currency: string,
         days: number,
@@ -68,7 +68,7 @@ export default {
                 throw new Error(error);
             });
     },
-    async getTopCoins(
+    getTopCoins(
         currency: string,
         order: string = "market_cap",
         per_page: number = 20,
@@ -88,7 +88,7 @@ export default {
                 throw new Error("Internal Server Error 500");
             });
     },
-    async getTrendingCoins() {
+    getTrendingCoins() {
         return apiClient
             .get("search/trending")
             .then((res: AxiosResponse) => res.data)

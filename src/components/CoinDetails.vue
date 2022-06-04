@@ -32,6 +32,7 @@ export default {
         coinID: String
     },
     async setup(props: { coinID: string }) {
+        // starting animation
         onMounted(() => {
             gsap.from(".custom-card", {
                 duration: 1,
@@ -46,12 +47,15 @@ export default {
             });
         });
         let rawInfo: APIData;
+
         const router = useRouter();
         const routes = useRoute();
+
         const prices: Array<number> = [];
         const pastDays: string[] = [];
         const chart = ref<any>({});
         try {
+            // calling the service
             rawInfo = await CoinServices.getCoinData(props.coinID, "usd", 7);
             rawInfo.marketData.prices.forEach(
                 // @ts-ignore
@@ -63,6 +67,7 @@ export default {
                 }
             );
 
+            // chart.js
             chart.value = {
                 labels: pastDays,
                 datasets: [
@@ -73,13 +78,16 @@ export default {
                     }
                 ]
             };
+
         } catch (e: any) {
+            // if the service fails go to 404 page
             await router.push({
                 name: "404Error",
                 params: { coinName: routes.params.coinID }
             });
         }
 
+        // display description of the coin
         function checkDescription(): void {
             Swal.fire({
                 title: "Description",

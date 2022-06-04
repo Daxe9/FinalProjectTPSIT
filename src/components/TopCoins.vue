@@ -7,6 +7,7 @@ import gsap from "gsap";
 
 export default {
     async setup() {
+        // aninmation
         onMounted(() => {
             gsap.from(".custom-card", {
                 duration: 1,
@@ -30,6 +31,7 @@ export default {
             });
         }
 
+        // handle onclick and redirect to coin details
         function onClick(coinID: string) {
             router.push({
                 name: "CoinDetails",
